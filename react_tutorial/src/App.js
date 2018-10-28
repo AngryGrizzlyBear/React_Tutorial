@@ -3,8 +3,8 @@ import Table from './Table';
 
 
 class App extends Component {
-    render() {
-        const characters = [
+    state = {
+        characters: [
             {
                 'name': 'Charlie',
                 'job': 'Janitor'
@@ -15,17 +15,36 @@ class App extends Component {
             },
             {
                 'name': 'Dee',
-                'job': 'Aspring actress'
+                'job': 'Aspring Actress'
             },
             {
                 'name': 'Dennis',
                 'job': 'Bartender'
             }
-        ];
+        ]
+    };
+
+    removeCharacter = index => {
+        const { characters } = this.state;
+
+        this.setState({
+            characters: characters.filter((character, i) => {
+                return i !== index;
+            })
+        });
+    }
+    handleSubmit = character => {
+        this.setState({characters: [...this.state.characters, character]});
+    }
+    render() {
+        const { characters } = this.state;
 
         return (
             <div className="container">
-                <Table characterData={characters}/>
+                <Table
+                    characterData={characters}
+                    removeCharacter={this.removeCharacter}
+                />
             </div>
         );
     }
